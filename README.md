@@ -162,6 +162,11 @@ This project is configured for easy deployment to Railway.
    railway variables set AZURE_SPEECH_KEY=your_azure_speech_key_here
    railway variables set AZURE_SERVICE_REGION=eastus
    ```
+   
+   If you encounter Python installation issues, you can also set:
+   ```bash
+   railway variables set RAILPACK_PYTHON_VERSION=3.11
+   ```
 
 5. **Deploy**:
    ```bash
@@ -176,13 +181,14 @@ The following files are included for Railway deployment:
 - `Procfile` - Defines the web process
 - `railway.json` - Railway-specific configuration
 - `nixpacks.toml` - Build configuration (installs Python and ffmpeg)
-- `runtime.txt` - Python version specification
+- `app.py` - Entry point for Railway to auto-detect FastAPI
 
 ### Important Notes for Railway
 
 - The app automatically uses the `PORT` environment variable provided by Railway
 - `ffmpeg` is installed via Nixpacks configuration for audio format conversion
 - Make sure to set `AZURE_SPEECH_KEY` and `AZURE_SERVICE_REGION` as environment variables in Railway
+- If you encounter Python version issues, you can set `RAILPACK_PYTHON_VERSION=3.11` as an environment variable (Railway will auto-detect Python 3.11+ from your requirements.txt otherwise)
 - The API will be available at the Railway-provided domain (e.g., `https://your-app.railway.app`)
 
 ### Testing the Deployment

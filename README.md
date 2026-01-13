@@ -163,10 +163,11 @@ This project is configured for easy deployment to Railway.
    railway variables set AZURE_SERVICE_REGION=eastus
    ```
    
-   If you encounter Python installation issues, you can also set:
+   **Important:** If you encounter Python 3.13 compatibility issues (like `pydantic-core` build errors), set:
    ```bash
    railway variables set RAILPACK_PYTHON_VERSION=3.11
    ```
+   This ensures Railway uses Python 3.11, which is fully compatible with all dependencies.
 
 5. **Deploy**:
    ```bash

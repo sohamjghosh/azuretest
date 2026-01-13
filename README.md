@@ -130,3 +130,70 @@ curl -X POST "http://localhost:8000/assess" \
 # Scripted assessment
 curl -X POST "http://localhost:8000/assess?reference_text=hello%20world" \
   -F "audio_file=@recording.wav"
+
+## Deploying to Railway
+
+This project is configured for easy deployment to Railway.
+
+### Prerequisites
+- A Railway account (sign up at [railway.app](https://railway.app))
+- An Azure Speech Services key and region
+
+### Deployment Steps
+
+1. **Install Railway CLI** (optional, but recommended):
+   ```bash
+   npm i -g @railway/cli
+   ```
+
+2. **Login to Railway**:
+   ```bash
+   railway login
+   ```
+
+3. **Initialize Railway project** (if not using GitHub integration):
+   ```bash
+   railway init
+   ```
+
+4. **Set Environment Variables**:
+   In the Railway dashboard or via CLI:
+   ```bash
+   railway variables set AZURE_SPEECH_KEY=your_azure_speech_key_here
+   railway variables set AZURE_SERVICE_REGION=eastus
+   ```
+
+5. **Deploy**:
+   ```bash
+   railway up
+   ```
+   
+   Or connect your GitHub repository to Railway for automatic deployments.
+
+### Railway Configuration Files
+
+The following files are included for Railway deployment:
+- `Procfile` - Defines the web process
+- `railway.json` - Railway-specific configuration
+- `nixpacks.toml` - Build configuration (installs Python and ffmpeg)
+- `runtime.txt` - Python version specification
+
+### Important Notes for Railway
+
+- The app automatically uses the `PORT` environment variable provided by Railway
+- `ffmpeg` is installed via Nixpacks configuration for audio format conversion
+- Make sure to set `AZURE_SPEECH_KEY` and `AZURE_SERVICE_REGION` as environment variables in Railway
+- The API will be available at the Railway-provided domain (e.g., `https://your-app.railway.app`)
+
+### Testing the Deployment
+
+Once deployed, you can test the API:
+```bash
+# Health check
+curl https://your-app.railway.app/health
+
+# Assess pronunciation
+curl -X POST "https://your-app.railway.app/assess" \
+  -F "audio_file=@recording.wav" \
+  -F "reference_text=Hello world"
+```

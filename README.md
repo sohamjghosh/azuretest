@@ -163,10 +163,15 @@ This project is configured for easy deployment to Railway.
    railway variables set AZURE_SERVICE_REGION=eastus
    ```
    
-   **Important:** If you encounter Python 3.13 compatibility issues (like `pydantic-core` build errors), set:
+   **Important:** If you encounter Python 3.13 compatibility issues (like `pydantic-core` build errors), you have two options:
+   
+   **Option A:** Set the environment variable (use `3.11` without patch version):
    ```bash
    railway variables set RAILPACK_PYTHON_VERSION=3.11
    ```
+   
+   **Option B:** A `.python-version` file is already included in the project root with `3.11` - Railway will automatically use this.
+   
    This ensures Railway uses Python 3.11, which is fully compatible with all dependencies.
 
 5. **Deploy**:
@@ -183,6 +188,7 @@ The following files are included for Railway deployment:
 - `railway.json` - Railway-specific configuration
 - `nixpacks.toml` - Build configuration (installs Python and ffmpeg)
 - `app.py` - Entry point for Railway to auto-detect FastAPI
+- `.python-version` - Specifies Python 3.11 for Railway's mise to use
 
 ### Important Notes for Railway
 
